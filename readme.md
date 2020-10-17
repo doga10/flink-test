@@ -1,8 +1,9 @@
 # **Flink - Back-End**
 
 > ## Iniciar Projeto
-* docker-compose up -d
+* docker run --name mysql -e MYSQL_ROOT_PASSWORD=root -d mysql:5.7
 * rodar o script.sql no mysql
+* docker-compose up -d
 
 > ## Princípios
 

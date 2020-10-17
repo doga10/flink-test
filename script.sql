@@ -1,5 +1,3 @@
-CREATE DATABASE app;
-
 USE app;
 
 CREATE TABLE `accounts` (

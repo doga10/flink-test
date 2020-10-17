@@ -2,22 +2,34 @@ version: "3"
 services:
   mysql:
     image: mysql:5.7
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWOR: root
-    ports: 
+    restart: unless-stopped
+    tty: true
+    ports:
       - "3306:3306"
-
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: app
+    networks:
+      - app-network
+      
   app:
-    container_name: api-container
-    image: node:12
-    working_dir: /usr/src/flink-test
+    build: .
     restart: always
-    command: bash -c "npm i && npm run start"
-    volumes:
-      - ./dist/:/usr/src/flink-test/dist/
-      - ./package.json:/usr/src/flink-test/package.json
     ports:
       - "5050:5050"
+    environment:
+      DB_HOST: mysql
+      DB_USER: root
+      DB_PASS: root
+      DB_NAME: app
+      PORT: 5050
+      JWT_SECRET: 'tj67O==5H'
     links:
       - mysql
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+    
